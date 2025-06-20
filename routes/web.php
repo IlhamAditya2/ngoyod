@@ -7,7 +7,17 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Product;
+use Illuminate\Support\Facades\DB;
 
+
+Route::get('/db-test', function () {
+    try {
+        DB::connection()->getPdo();
+        return '✅ Database connected!';
+    } catch (\Exception $e) {
+        return '❌ DB ERROR: ' . $e->getMessage();
+    }
+});
 // Route::get('/', function () {
 //     return view('welcome');
 // });
