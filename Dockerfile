@@ -15,13 +15,16 @@ WORKDIR /var/www/html
 # Install Laravel dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Set correct permissions
+# Set file & folder permissions
 RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html/storage \
-    && chmod -R 755 /var/www/html/bootstrap/cache
+ && chmod -R 755 /var/www/html/storage \
+ && chmod -R 755 /var/www/html/bootstrap/cache
 
-# Enable Apache mod_rewrite
+# Enable Apache rewrite module
 RUN a2enmod rewrite
 
-# Set DocumentRoot ke public
+# Set document root ke /public
 RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|' /etc/apache2/sites-available/000-default.conf
+
+# ✅ JALANKAN MIGRATE dan START Apache
+CMD php artisan config:clear && php artisan migrate --force && apache2-foreground
