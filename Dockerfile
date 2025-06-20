@@ -16,6 +16,9 @@ WORKDIR /var/www/html
 # Install Laravel dependencies
 RUN composer install --no-dev --optimize-autoloader
 
+# Migrate
+RUN php artisan migrate --force
+
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage
