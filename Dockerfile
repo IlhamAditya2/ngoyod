@@ -1,6 +1,5 @@
 FROM php:8.3-apache
 
-
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     unzip zip curl git libzip-dev \
@@ -9,20 +8,16 @@ RUN apt-get update && apt-get install -y \
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Copy project files (sebelum composer install!)
+# Copy all project files
 COPY . /var/www/html
 WORKDIR /var/www/html
 
 # Install Laravel dependencies
 RUN composer install --no-dev --optimize-autoloader
 
-# Migrate
-RUN php artisan config:clear && php artisan migrate --force
-
-
-# Set permissions
+# Set correct permissions
 RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html/storage
+    && chmod -R 755 /var/www/html/storage \
     && chmod -R 755 /var/www/html/bootstrap/cache
 
 # Enable Apache mod_rewrite
