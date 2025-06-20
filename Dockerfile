@@ -27,4 +27,4 @@ RUN a2enmod rewrite
 RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|' /etc/apache2/sites-available/000-default.conf
 
 # ✅ JALANKAN MIGRATE dan START Apache
-CMD php artisan config:clear && php artisan migrate --force && apache2-foreground
+# CMD php artisan config:clear && php artisan migrate --force && apache2-foreground
