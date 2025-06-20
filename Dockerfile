@@ -17,7 +17,8 @@ WORKDIR /var/www/html
 RUN composer install --no-dev --optimize-autoloader
 
 # Migrate
-RUN php artisan migrate --force
+RUN php artisan config:clear && php artisan migrate --force
+
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
