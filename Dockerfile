@@ -23,6 +23,7 @@ RUN php artisan config:clear && php artisan migrate --force
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html/storage
+    && chmod -R 755 /var/www/html/bootstrap/cache
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
